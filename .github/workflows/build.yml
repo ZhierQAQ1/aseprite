@@ -1,11 +1,11 @@
 name : build
 on: [push，pull_request]
-jobs :
-build:
-runs-on: $i{ matrix.os }}
-strategy:
-fail-fast: false
-matrix:
+jobs:
+ build:
+   runs-on: ${ matrix.os }}
+   strategy:
+    fail-fast: false
+    matrix:
 os: [windows-latest]
 build_type: [Release]
 enable_ui: [on]
@@ -16,33 +16,33 @@ enable_ui: on
 steps :
 - uses : actions / checkout@v3
 with:
-submodules : " recursive'
+submodules : 'recursive'
 - name: ccache
-uses: hendrikmuhs / ccache-action@v1
+uses: hendrikmuhs /ccache-action@v1
 if : runner.os == 'Linux '
 with:
 key : ${{ matrix.os }}-${{ matrix.enable_ui }}
 - uses : seanmiddleditch/gha-setup-ninja@master
-- uses: ilammy / msvc-dev-cmd@v1
-if : runner.os == "windows '
+- uses: ilammy/msvc-dev-cmd@v1
+if: runner.os == "windows '
 - name: Install Dependencies
 shell: bash
-run:l 
+run:| 
 if [[“${{ runner.os }}”== "Linux”]] ; then
 sudo apt-get update -qq
-sudo apt-get install -y\
+sudo apt-get install -y \
 libx11-dev libxcursor-dev libxi-dev
 fi
 - name: Generating Makefiles
 shell: bash
-run: l
+run: |
 if [["${{ runner.os }}” == "windows”]] ; then
 export enable_ccache=off
 else
 export enable_ccache=onfi
 curl -L https://github.com/blueloveTH/ aseprite/releases/download/ve.01/skia.zip --output skia.zip
 7z x skia.zip
-cmake -s . -B build -G Ninja l
+cmake -s . -B build -G Ninja \
 -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}\
 -DENABLE_UI=${i matrix.enable_ui }}\
 -DENABLE_CCACHE=$enable_ccache\
@@ -56,6 +56,6 @@ cd build && ninja
 - uses : actions/ upload-artifact@v3
 with:
 name: aseprite
-path: l
+path: |
 D:/a/aseprite/aseprite/build/bin/data
 D:/ a/aseprite/aseprite/build/bin/aseprite.exe
